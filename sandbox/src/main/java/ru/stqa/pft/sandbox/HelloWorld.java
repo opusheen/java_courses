@@ -14,8 +14,9 @@ public class HelloWorld {
             Rectangle r = new Rectangle(4, 6);
             System.out.println("Площадь прямоугольника со сторонами " + r.a + "и" + r.b + "=" + r.area());
 
-///            Point p2 = new Point(x: 2, y:2) ;
-System.out.println ("Расстояние между точками равно  " + p1.distance(p2) );
+           Point p1 = new Point(1, 1);
+           Point p2 = new Point(2,2);
+           System.out.println ("Расстояние между точками равно  " + p1.distance(p2) );
         }
         public static void hello(String somebody)  {
 
