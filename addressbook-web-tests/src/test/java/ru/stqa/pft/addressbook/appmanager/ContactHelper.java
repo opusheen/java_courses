@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -12,16 +13,18 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void fillContactForm (ContactData contactData) {
+    public void fillContactForm (ContactData contactData, boolean creation ) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobilephonenumber());
         type(By.name("email"), contactData.getEmail());
-
-        if (isElementPresent(By.name("new_group"))) {
+        if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+
+            }
         }
-    }
 
 
 
