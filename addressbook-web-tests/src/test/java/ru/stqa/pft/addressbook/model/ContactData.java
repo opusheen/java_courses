@@ -7,24 +7,19 @@ public class ContactData {
     private  int  id  = Integer.MAX_VALUE;
     private  String firstname;
     private  String lastname;
-    private  String mobilephonenumber;
+    private  String address;
     private  String email;
-    private String group;
+    private  String email2;
+    private  String email3;
+    private  String mobilephonenumber;
+    private  String homephone;
+    private  String workphone;
+    private  String group;
+    private  String allPhones;
+    private  String allEmails;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return id == that.id &&
-                Objects.equals(firstname, that.firstname) &&
-                Objects.equals(lastname, that.lastname);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
-    }
+
 
     // Here are setters for ContactData
     public ContactData withId(int id) {
@@ -40,6 +35,11 @@ public class ContactData {
         this.lastname = lastname;
         return this;
     }
+    public ContactData withAddress (String address) {
+        this.address = address;
+        return this;
+    }
+
 
     public ContactData withMobilephonenumber(String mobilephonenumber) {
         this.mobilephonenumber = mobilephonenumber;
@@ -50,14 +50,37 @@ public class ContactData {
         this.email = email;
         return this;
     }
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
 
     public ContactData withGroup(String group) {
         this.group = group;
         return this;
     }
 
-
-
+    public ContactData withHomephone (String homephone) {
+        this.homephone = homephone;
+        return this;
+    }
+    public ContactData withWorkphone (String workphone) {
+        this.workphone = workphone;
+        return this;
+    }
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+    public ContactData withallEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
+    }
+ ///  Getters for ContactData
 
     public int getId() { return id; }
 
@@ -69,6 +92,44 @@ public class ContactData {
         return lastname;
     }
 
+    public String getAddress() {return address;}
+
+
+
+    public String getMobilephonenumber() {
+        return mobilephonenumber;
+    }
+    public String getHomephone() {return homephone; }
+    public String getWorkphone() { return workphone; }
+
+
+
+    public String getEmail() {
+        return email;
+    }
+    public String getEmail2() {
+        return email2;
+    }
+    public String getEmail3() {
+        return email3;
+    }
+
+
+    public String getGroup() {
+        return group;
+    }
+
+
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+    public String getallEmails() {
+        return allEmails;
+    }
+
+
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -77,18 +138,19 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
-
-    public String getMobilephonenumber() {
-        return mobilephonenumber;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname);
     }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
     }
-
-    public String getGroup() {
-        return group;
-    }
-
 
 }
