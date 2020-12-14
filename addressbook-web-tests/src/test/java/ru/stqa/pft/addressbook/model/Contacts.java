@@ -20,6 +20,8 @@ public class Contacts extends ForwardingSet<ContactData> {
     protected Set<ContactData> delegate() {
         return delegate;
     }
+
+
     public Contacts withAdded (ContactData contact) {
         Contacts contacts = new Contacts (this);
         contacts.add(contact);

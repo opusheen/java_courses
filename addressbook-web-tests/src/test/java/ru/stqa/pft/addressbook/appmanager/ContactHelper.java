@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,23 +33,24 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void fillContactForm (ContactData contactData, boolean creation ) {
+    public void fillContactForm ( ContactData contactData, boolean creation ) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
+        type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobilephonenumber());
         type(By.name("email"), contactData.getEmail());
-        if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-        } else {
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        attach(By.name("photo"),contactData.getPhoto());
+       if (creation) {
+           new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } else {
+          Assert.assertFalse(isElementPresent(By.name("new_group")));
 
-        }
+      }
     }
 
 
 
     public void submitContactCreation () {
-
         click(By.name("submit"));
     }
 
@@ -110,11 +112,11 @@ public class ContactHelper extends HelperBase {
         contactsCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element:elements) {
-            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
-            String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
+            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
             String address = element.findElement(By.xpath(".//td[4]")).getText();
             String allEmails = element.findElement(By.xpath(".//td[5]")).getText();
+            String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             contactsCache.add(new ContactData().withId(id).withFirstName(firstname).withLastname(lastname).withAllPhones(allPhones).withallEmails(allEmails).withAddress(address));
         }
@@ -150,6 +152,10 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         deleteContact();
         acceptDeletionAllert();
+    }
+
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 
     Contacts contactsCache = null;
