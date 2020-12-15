@@ -23,6 +23,8 @@ public class ContactDataGenerator {
     public String file;
     @Parameter (names = "-d", description = "Data format")
     public String format;
+///-c 1 -f src\test\resources\contacts.json -d json
+//wdrir=addressbook web tests
 
     public static void main (String [] args) throws IOException {
 
@@ -81,14 +83,20 @@ public class ContactDataGenerator {
         List<ContactData> contacts = new ArrayList<ContactData>();
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactData().withFirstName(String.format("Ivan%s", i))
-                    .withLastname(String.format("test%s", i))
+                    .withLastname(String.format("Ivanov%s", i))
                     .withAddress(String.format("street%s",i))
                     .withEmail(String.format("emailyahoo%s",i))
-                    .withGroup(String.format("test1", i))
-                    .withMobilephonenumber(String.format("435%s",i)));
+                    .withEmail2(String.format("emailyahoo%s",i))
+                    .withEmail3(String.format("emailyahoo%s",i))
+                    .withMobilephonenumber(String.format("435%s",i))
+                    .withWorkphone(String.format("43353464365%s",i))
+                    .withHomephone(String.format("00%s",i)));
 
         }
         return contacts;
     }
 
 }
+
+// -c 10 -f src\test\resources\contacts.json -d json
+//wdir \java_c\java_courses\addressbook-web-tests

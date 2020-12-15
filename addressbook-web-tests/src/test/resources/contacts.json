@@ -1,82 +1,46 @@
 [
   {
     "firstname": "Ivan0",
-    "lastname": "test0",
+    "lastname": "Ivanov0",
     "address": "street0",
     "email": "emailyahoo0",
+    "email2": "emailyahoo0",
+    "email3": "emailyahoo0",
     "mobilephonenumber": "4350",
-    "group": "test1"
+    "homephone": "000",
+    "workphone": "433534643650"
   },
   {
     "firstname": "Ivan1",
-    "lastname": "test1",
+    "lastname": "Ivanov1",
     "address": "street1",
     "email": "emailyahoo1",
+    "email2": "emailyahoo1",
+    "email3": "emailyahoo1",
     "mobilephonenumber": "4351",
-    "group": "test1"
+    "homephone": "001",
+    "workphone": "433534643651"
   },
   {
     "firstname": "Ivan2",
-    "lastname": "test2",
+    "lastname": "Ivanov2",
     "address": "street2",
     "email": "emailyahoo2",
+    "email2": "emailyahoo2",
+    "email3": "emailyahoo2",
     "mobilephonenumber": "4352",
-    "group": "test1"
+    "homephone": "002",
+    "workphone": "433534643652"
   },
   {
     "firstname": "Ivan3",
-    "lastname": "test3",
+    "lastname": "Ivanov3",
     "address": "street3",
     "email": "emailyahoo3",
+    "email2": "emailyahoo3",
+    "email3": "emailyahoo3",
     "mobilephonenumber": "4353",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan4",
-    "lastname": "test4",
-    "address": "street4",
-    "email": "emailyahoo4",
-    "mobilephonenumber": "4354",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan5",
-    "lastname": "test5",
-    "address": "street5",
-    "email": "emailyahoo5",
-    "mobilephonenumber": "4355",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan6",
-    "lastname": "test6",
-    "address": "street6",
-    "email": "emailyahoo6",
-    "mobilephonenumber": "4356",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan7",
-    "lastname": "test7",
-    "address": "street7",
-    "email": "emailyahoo7",
-    "mobilephonenumber": "4357",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan8",
-    "lastname": "test8",
-    "address": "street8",
-    "email": "emailyahoo8",
-    "mobilephonenumber": "4358",
-    "group": "test1"
-  },
-  {
-    "firstname": "Ivan9",
-    "lastname": "test9",
-    "address": "street9",
-    "email": "emailyahoo9",
-    "mobilephonenumber": "4359",
-    "group": "test1"
+    "homephone": "003",
+    "workphone": "433534643653"
   }
 ]

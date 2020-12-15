@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +40,22 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobilephonenumber());
         type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
+        type(By.name("mobile"), contactData.getMobilephonenumber());
+        type(By.name("home"), contactData.getHomephone());
+        type(By.name("work"), contactData.getWorkphone());
         attach(By.name("photo"),contactData.getPhoto());
-       if (creation) {
-           new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-      } else {
-          Assert.assertFalse(isElementPresent(By.name("new_group")));
+        if (creation) {
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
 
-      }
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+            }
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
+
     }
 
 
@@ -159,4 +169,15 @@ public class ContactHelper extends HelperBase {
     }
 
     Contacts contactsCache = null;
+
+    public void addToGroup(GroupData group){
+
+        new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByVisibleText(group.getName());
+        click(By.name("add"));
+
+    }
+    public void choosingGroupToDelete(GroupData group){
+
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    }
 }

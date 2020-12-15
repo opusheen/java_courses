@@ -3,36 +3,64 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
+import java.io.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 @XStreamAlias("contact")
+@Entity
+@Table(name ="addressbook")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private  int  id  = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private  String firstname;
     @Expose
+    @Column(name = "lastname")
     private  String lastname;
     @Expose
+    @Type(type="text")
     private  String address;
     @Expose
+    @Type(type="text")
     private  String email;
     @Expose
+    @Type(type="text")
     private  String email2;
     @Expose
+    @Type(type="text")
     private  String email3;
     @Expose
+    @Column(name = "mobile")
+    @Type(type="text")
     private  String mobilephonenumber;
     @Expose
+    @Column(name = "home")
+    @Type(type="text")
     private  String homephone;
     @Expose
+    @Column(name = "work")
+    @Type(type="text")
     private  String workphone;
-    @Expose
-    private  String group;
+
+    @Transient
     private  String allPhones;
+    @Transient
     private  String allEmails;
-    private  File photo;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name ="address_in_groups", joinColumns = @JoinColumn(name="id"), inverseJoinColumns = @JoinColumn (name="group_id") )
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
 
 
@@ -74,12 +102,6 @@ public class ContactData {
         this.email3 = email3;
         return this;
     }
-
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public ContactData withHomephone (String homephone) {
         this.homephone = homephone;
         return this;
@@ -99,9 +121,9 @@ public class ContactData {
 
 
     public ContactData withPhoto(File photo) {
-        this.photo = this.photo;
-        return this;
-        }
+       this.photo = photo.getPath();
+       return this;
+    }
  ///  Getters for ContactData
 
     public int getId() { return id; }
@@ -116,6 +138,13 @@ public class ContactData {
 
     public String getAddress() {return address;}
 
+   public Groups getGroups() {
+        return new Groups(groups);
+   }
+    public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+   }
 
 
     public String getMobilephonenumber() {
@@ -123,37 +152,22 @@ public class ContactData {
     }
     public String getHomephone() {return homephone; }
     public String getWorkphone() { return workphone; }
-
-
-
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email;}
     public String getEmail2() {
         return email2;
     }
+
     public String getEmail3() {
         return email3;
     }
-
-
-    public String getGroup() {
-        return group;
-    }
-
-
-
     public String getAllPhones() {
         return allPhones;
     }
     public String getallEmails() {
         return allEmails;
     }
-
-    public File getPhoto() {
-        return photo;
-    }
-
+    public File getPhoto() {return new File(photo);
+   }
 
     @Override
     public String toString() {
@@ -164,24 +178,27 @@ public class ContactData {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-
+        return
+                id == that.id &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(address, that.address)&&
+               Objects.equals(email, that.email) &&
+               Objects.equals(email2, that.email2) &&
+                Objects.equals(email3, that.email3) &&
+               Objects.equals(mobilephonenumber, that.mobilephonenumber) &&
+               Objects.equals(homephone, that.homephone) &&
+                Objects.equals(workphone, that.workphone) ;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
+        return Objects.hash(id, firstname, lastname, address, email, email2, email3, mobilephonenumber, homephone, workphone);
     }
 }

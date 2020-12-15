@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-
+///-c 10 -f src\test\resources\groups.json -d json
+//wdrir=addressbook web tests
 
 public class GroupDataGenerator {
 
@@ -80,8 +81,8 @@ public class GroupDataGenerator {
          private  List<GroupData>  generateGroups (int count) {
          List<GroupData> groups = new ArrayList<GroupData>();
          for (int i = 0; i < count; i++) {
-             groups.add(new GroupData().withName(String.format("test %s", i))
-                 .withHeader(String.format("header\n%s", i)).withFooter(String.format("footer\n%s",i)));
+             groups.add(new GroupData().withName(String.format("test%s", i))
+                 .withHeader(String.format("header%s", i)).withFooter(String.format("footer%s",i)));
          }
           return groups;
         }

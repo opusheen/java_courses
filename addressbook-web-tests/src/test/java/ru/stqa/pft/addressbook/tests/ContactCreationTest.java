@@ -8,6 +8,7 @@ import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -52,16 +54,19 @@ public class ContactCreationTest extends TestBase{
     }
 
     @Test (dataProvider = "validContactsFromJson")
-    public void testContactCreation(ContactData contact)  {
-        app.goTo().homePage();
-        Contacts before = app.contact().all();
+    public void testContactCreation(ContactData contact) throws InterruptedException {
+        GroupData groups = app.db().groups().iterator().next();
         File photo = new File("src/test/resources/husk.png");
-        app.contact().create(contact.withPhoto(photo), true);
         app.goTo().homePage();
+        Contacts before = app.db().contacts();
+        app.contact().create(contact.inGroup(groups).withPhoto(photo), true);
+        app.goTo().homePage();
+        TimeUnit.SECONDS.sleep(10);
         assertThat(app.contact().count(), equalTo (before.size() + 1));
-        Contacts after = app.contact().all();
-        assertThat(after, equalTo(
-                before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+        Contacts after = app.db().contacts();
+        Contacts beforeAndNew = before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()));
+        assertThat(after, equalTo(beforeAndNew));
+        verifyContactListInUI();
     }
 
 
