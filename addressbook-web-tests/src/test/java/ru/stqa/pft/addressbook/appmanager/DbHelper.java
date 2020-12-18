@@ -54,4 +54,15 @@ public Groups groups() {
         session.close();
         return result;
     }
+    public GroupData groups(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String request = "from GroupData where group_id = " + id;
+        System.out.println(request);
+        List<GroupData> resultGroup = session.createQuery(request).list();
+        GroupData result =  resultGroup.iterator().next();
+        session.getTransaction().commit();
+        session.close();
+        return result;
+    }
 }

@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -176,8 +175,13 @@ public class ContactHelper extends HelperBase {
         click(By.name("add"));
 
     }
-    public void choosingGroupToDelete(GroupData group){
 
+
+    public void deleteFromGroup(GroupData group) {
+        click(By.name("remove"));
+    }
+    public void selectGroup(GroupData group) {
         new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
     }
+
 }

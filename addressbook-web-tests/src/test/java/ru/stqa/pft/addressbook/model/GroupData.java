@@ -22,7 +22,7 @@ import java.util.Set;
     @Column(name = "group_name")
     private  String name;
     @ManyToMany(fetch = FetchType.EAGER , mappedBy = "groups")
-    private Set<ContactData> conacts = new HashSet<ContactData>();
+    private Set<ContactData> contacts = new HashSet<ContactData>();
 
         @Override
         public boolean equals(Object o) {
@@ -95,7 +95,11 @@ import java.util.Set;
     }
 
     public Set<ContactData> getConacts() {
-        return new Contacts(conacts);
+        return new Contacts(contacts);
     }
 
+
+    public Contacts getContacts() {
+        return new Contacts(contacts);
     }
+}
