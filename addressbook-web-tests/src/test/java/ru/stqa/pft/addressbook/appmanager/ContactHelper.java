@@ -5,9 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +147,19 @@ public class ContactHelper extends HelperBase {
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
 
+    public Contacts contactswithgroups() {
+        if (contactsCache != null) {
+            return new Contacts(contactsCache);}
+        contactsCache = new Contacts();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element:elements) {
+
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+
+        }
+        return new Contacts(contactsCache) ;
+    }
+
 
 //delete contacts
     public void delete(int index) {
@@ -169,16 +180,18 @@ public class ContactHelper extends HelperBase {
 
     Contacts contactsCache = null;
 
-    public void addToGroup(GroupData group){
-
-        new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByVisibleText(group.getName());
-        click(By.name("add"));
-
+    public void addToGroup(GroupData group, ContactData contact){
+      selectContactById(contact.getId());
+      new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByVisibleText(group.getName());
+      wd.findElement(By.name("add")).click();
     }
 
 
-    public void deleteFromGroup(GroupData group) {
-        click(By.name("remove"));
+
+    public void deleteFromGroup(GroupData group, ContactData contact) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+        selectContactById(contact.getId());
+        wd.findElement(By.name("remove")).click();
     }
     public void selectGroup(GroupData group) {
         new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());

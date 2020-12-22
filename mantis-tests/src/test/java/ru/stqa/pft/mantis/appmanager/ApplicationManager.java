@@ -20,6 +20,10 @@ public class ApplicationManager {
     private String browser;
     private FtpHelper ftp;
     private MailHelper mailHelper;
+    private JamesHelper jamesHelper;
+    private UserManagerHelper userHelper;
+    private DbHelper db;
+    private SoapHelper soapHelper;
 
 
     public ApplicationManager(String browser) {
@@ -82,6 +86,31 @@ public class ApplicationManager {
             mailHelper = new MailHelper (this);
         }
         return mailHelper;
+    }
+    public JamesHelper james() {
+        if (jamesHelper == null) {
+            jamesHelper = new JamesHelper(this);
+        }
+        return jamesHelper;
+    }
+    public UserManagerHelper user() {
+        if (userHelper == null) {
+            userHelper = new UserManagerHelper(this);
+        }
+        return userHelper;
+    }
+    public DbHelper db() {
+        if (db == null) {
+            db = new DbHelper(this);
+        }
+        return db;
+    }
+
+    public SoapHelper soap() {
+        if (soapHelper == null) {
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
     }
 }
 

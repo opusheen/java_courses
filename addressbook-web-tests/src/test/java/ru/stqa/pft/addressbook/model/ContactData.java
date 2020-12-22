@@ -7,7 +7,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
-import java.io.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -137,7 +136,7 @@ public class ContactData {
     }
 
     public String getAddress() {return address;}
-
+    //множество превращается в объект типа Groups, при этом создается копия
    public Groups getGroups() {
         return new Groups(groups);
    }
@@ -156,7 +155,6 @@ public class ContactData {
     public String getEmail2() {
         return email2;
     }
-
     public String getEmail3() {
         return email3;
     }

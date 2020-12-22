@@ -5,10 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
+import ru.stqa.pft.addressbook.model.*;
 
 import java.util.List;
 
@@ -25,6 +22,9 @@ public class DbHelper {
 sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
 
 }
+public ContactData contact;
+public GroupData group;
+
 public Groups groups() {
     Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -44,6 +44,21 @@ public Groups groups() {
         session.close();
         return new Contacts(result);
     }
+
+
+
+
+
+    public Contacts contacttoDelete() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery("from ContactInGrData where deprecated = '0000-00-00' and where ").list();
+        session.getTransaction().commit();
+        session.close();
+        return new Contacts(result);
+    }
+
+
     public ContactData contacts(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -64,5 +79,56 @@ public Groups groups() {
         session.getTransaction().commit();
         session.close();
         return result;
+    }
+
+
+
+
+
+    public GroupData grouptoAdd(ContactData contact) {
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<GroupData> groups = session.createQuery("from GroupData").list();
+            int GroupId = 0;
+            int ContactId = contact.getId();
+
+        for (GroupData group : groups) {
+                GroupId = group.getId();
+                 List<ContactInGrData> contac = session.createQuery(" from ContactInGrData where id ='" + ContactId + "'"+ " and group_id ='" + GroupId + "'").list();
+                if (contac == null) {
+                    session.getTransaction().commit();
+                    session.close();
+                    return group;
+                }
+                    }
+        session.getTransaction().commit();
+        session.close();
+        return null;
+}
+
+
+
+    public ContactData contactToAddToGroup() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> contacts = session.createQuery("from ContactData where deprecated = '0000-00-00'").list();
+        int ContactId = 0;
+        int GroupId = 0;
+        for (ContactData contact : contacts) {
+            List<GroupData> groups = session.createQuery("from GroupData ").list();
+            for (GroupData group : groups) {
+                ContactId = contact.getId();
+                GroupId = group.getId();
+                List<ContactInGrData> contac = session.createQuery(" from ContactInGrData where id ='" + ContactId + "'" + " and group_id ='" + GroupId + "'").list();
+                if (contac == null) {
+                    session.getTransaction().commit();
+                    session.close();
+                    return contact;
+                }
+            }
+        }
+        session.getTransaction().commit();
+        session.close();
+        return null;
     }
 }

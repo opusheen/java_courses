@@ -4,9 +4,9 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,27 +22,40 @@ public class DeleteContactFromGroup extends TestBase{
                 app.contact().create(new ContactData().withFirstName("Ivan").withLastname("Ivanov").withMobilephonenumber("0000000").withEmail("ivan@mail.ru").withPhoto(new File("addressbook-web-tests/src/test/resources/husk.png")), true);
         }
     }
-    @Test
-    public void testDeleteContactfromGroup() {
-        Groups groupsOverall = app.db().groups();
-        Contacts contatctsOverall = app.db().contacts();
-        ContactData contactSelected = contatctsOverall.iterator().next();
-        GroupData groupSelected = groupsOverall.iterator().next();
-        Groups groupsInContact = contactSelected.getGroups();
-        int s = groupsInContact.size();
-        Contacts contactsBeforeRemoveFromGroup = app.db().groups(groupSelected.getId()).getContacts();
-        app.goTo().homePage();
-      if (s == 0) {
-            app.goTo().homePage();
-            app.contact().selectContactById(contactSelected.getId());
-            app.contact().addToGroup(groupSelected);
-            app.goTo().homePage();
-        }
-        app.contact().selectGroup(groupSelected);
-        app.contact().selectContactById(contactSelected.getId());
-        app.contact().deleteFromGroup(groupSelected);
-        app.goTo().homePage();
-        Contacts contactsAterRemoveFromGroup = app.db().groups(groupSelected.getId()).getContacts();
-        assertThat(contactsAterRemoveFromGroup, equalTo(contactsBeforeRemoveFromGroup.without(contactSelected)));
+     @Test
+    public void testDeleteContactfromGroup() throws InterruptedException {
+        GroupData group = app.db().groups().iterator().next();
+        boolean GroupisNotAvailible = true;
+
+         for (GroupData groups : app.db().groups()) {
+             if (groups.getContacts().size() > 0) {
+                 group = groups;
+                 GroupisNotAvailible = false;
+                 break;
+             }
+         }
+
+         if (GroupisNotAvailible) {
+             ContactData contact = app.db().contacts().iterator().next();
+             app.goTo().homePage();
+             app.contact().addToGroup(group,contact);
+             app.goTo().homePage();
+             assertThat(app.db().groups(group.getId()).getContacts(), equalTo(group.getContacts().withAdded(contact)));
+         }
+
+         ContactData contact = app.db().groups(group.getId()).getContacts().iterator().next();
+         Contacts contactsBeforeRemoveFromGroup = app.db().groups(group.getId()).getContacts();
+         app.goTo().homePage();
+         app.contact().deleteFromGroup(group, contact);
+         app.goTo().homePage();
+         TimeUnit.SECONDS.sleep(10);
+         Contacts afterDeleteFromGroup = app.db().groups(group.getId()).getContacts();
+         assertThat(afterDeleteFromGroup, equalTo(contactsBeforeRemoveFromGroup.without(contact)));
     }
 }
+//        int s = groupsInContact.size();
+//      if (s == 0) {
+//           app.goTo().homePage();
+//            app.contact().selectContactById(contactSelected.getId());
+//        app.contact().addToGroup(group, contact);
+//            app.goTo().homePage();
