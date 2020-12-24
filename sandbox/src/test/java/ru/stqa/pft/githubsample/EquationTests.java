@@ -1,4 +1,4 @@
-package ru.stqa.pft.sandbox;
+package ru.stqa.pft.githubsample;
 
 import org.junit.Assert;
 import org.testng.annotations.Test;

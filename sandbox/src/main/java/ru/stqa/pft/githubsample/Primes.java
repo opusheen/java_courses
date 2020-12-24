@@ -1,4 +1,4 @@
-package ru.stqa.pft.sandbox;
+package ru.stqa.pft.githubsample;
 
 public class Primes {
     public static boolean isPrime(int n) {

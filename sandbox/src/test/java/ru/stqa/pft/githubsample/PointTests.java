@@ -1,8 +1,7 @@
-package ru.stqa.pft.sandbox;
+package ru.stqa.pft.githubsample;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class PointTests {
 

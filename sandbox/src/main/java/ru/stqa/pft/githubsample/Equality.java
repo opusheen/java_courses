@@ -1,6 +1,4 @@
-package ru.stqa.pft.sandbox;
-
-import java.sql.SQLOutput;
+package ru.stqa.pft.githubsample;
 
 public class Equality {
     public static void main (String[] args) {
