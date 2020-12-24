@@ -62,3 +62,7 @@ task rf(type: JavaExec) {
     args '--outputdir', 'build/rf-report'
     args 'src/test/resources/rf'
 }
+
+test {
+    useTestNG()
+}
