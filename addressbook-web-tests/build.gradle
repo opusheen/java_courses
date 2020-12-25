@@ -56,12 +56,7 @@ if (project.hasProperty('platform')) {
         }
 
     }
-task rf(type: JavaExec) {
-    main = 'org.robotframework.RobotFramework'
-    classpath = sourceSets.test.runtimeClasspath
-    args '--outputdir', 'build/rf-report'
-    args 'src/test/resources/rf'
-}
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'

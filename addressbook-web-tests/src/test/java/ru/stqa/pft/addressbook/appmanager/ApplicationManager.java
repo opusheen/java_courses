@@ -33,10 +33,13 @@ public class ApplicationManager {
     }
 
 
-    public void init()  throws IOException {
+    public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
         dbHelper  = new DbHelper();
+
+
         if ("".equals(properties.getProperty("selenium.server"))) {
         if (browser.equals( BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
@@ -45,10 +48,10 @@ public class ApplicationManager {
         } else if (browser.equals( BrowserType.IE)) {
             wd = new InternetExplorerDriver();
         }
-        } else {
+        }  else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "windows10")));
+            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "WINDOWS")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
